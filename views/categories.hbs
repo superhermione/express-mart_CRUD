@@ -1,0 +1,168 @@
+
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+		
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+			}
+		}
+    function newCategory() { showform('insert'); }
+    function updateCategory(pid) { showform('update'); }
+  
+    function browseCategory() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+
+<body onload="browseCategory()">
+  <header data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">ExpressMart</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link" href="index">Home</a>
+            <a class="nav-link" href="products">Products</a>
+            <a class="nav-link active" href="categories">Categories</a>
+            <a class="nav-link" href="customers">Customers</a>
+            <a class="nav-link" href="employees">Employees</a>
+            <a class="nav-link" href="transactions">Transactions</a>
+            <a class="nav-link" href="itemsInTransaction">Transaction Details</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section class="py-5 text-center header-container">
+      <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h1 class="fw-light">Categories</h1>
+        </div>
+      </div>
+    </section>
+    <div id="browse">
+    
+      <table id="category-table">
+          <thead>
+              <tr>
+                  {{#each data.[0]}}
+                  <th>
+                      {{@key}}
+                  </th>
+                  {{/each}}
+                  <th></th>
+              </tr>
+          </thead>
+          <tbody>
+              {{#each data}}
+              <tr data-value={{this.categoryID}}>
+                  <td>{{this.categoryID}}</td>
+                  <td>{{this.categoryName}}</td>
+                  <td><button onclick="deleteCategory({{this.categoryID}})">Delete</button></td>
+              </tr>
+              {{/each}}
+          </tbody>
+      </table>
+      <table border="1" cellpadding="5">
+        <tr>
+          <th><a href="#" onClick="newCategory()">New</a></th>
+          <th></th>
+          <th>Category ID</th>
+          <th>Category Name</th>
+        </tr>
+        <tr>
+          <td><a href="#" onClick="updateCategory('this.categoryID')">Edit</a></td>
+          <td><a href="#" onclick="deleteCategory('this.categoryID')">Delete</a></td>
+          <td>1</td>
+          <td>Produce</td>
+        </tr>
+        <tr>
+          <td><a href="#" onClick="updateCategory('this.categoryID')">Edit</a></td>
+          <td><a href="#" onclick="deleteCategory('this.categoryID')">Delete</a></td>
+          <td>2</td>
+          <td>Dairy and Eggs</td>
+        </tr>
+        <tr>
+          <td><a href="#" onClick="updateCategory('this.categoryID')">Edit</a></td>
+          <td><a href="#" onclick="deleteCategory('this.categoryID')">Delete</a></td>
+          <td>3</td>
+          <td>Snacks</td>
+        </tr>
+      </table>
+      
+      <p>&nbsp;</p>
+      </div> <!-- browse -->
+      <p><a href="#" onClick="showAll()">Display all forms</a> </p>
+      <div id="insert">
+          <form action="/add-category"  method="POST" id="addCategory">
+              <legend><strong>Add Category</strong></legend>
+                <fieldset class="fields">
+                  <label> Category Name </label> <input type="text" name="categoryName" id="categoryName">
+                </fieldset>
+                <input class="btn btn-outline-secondary" type="submit" id="addCategory" value="Add Category">
+                <input class="btn btn-outline-secondary" type="button" value="cancel" onClick="browseCategory()">
+        </form> 
+      </div><!-- insert -->
+      <p>&nbsp;</p>
+
+      <div id="update">
+          <form method="POST" id="updateCategory">
+              <legend><strong>Update Category</strong></legend>
+                <fieldset class="fields">
+                <label for="input-categoryID">ID: </label>
+                <select name="input-categoryID" id="selectCategoryID">
+                    <option value="test">Select an ID</option>
+                    {{#each data}}
+                    <option value="{{this.categoryID}}">{{this.categoryID}}</option>
+                    {{/each}}
+                </select>
+                <fieldset class="fields">
+                  <label> Category Name </label> <input type="text" name="categoryName" id="categoryName">
+                </fieldset>
+            </fieldset>
+                <input class="btn btn-outline-secondary" type="submit" id="UpdateSaveCategory" value="Save Update Category">
+                <input class="btn btn-outline-secondary" type="button" value="cancel" onClick="browseCategory()">
+        </form> 
+      </div><!-- update -->
+      <p>&nbsp;</p>
+
+
+  </main>
+</body>
+<script src="./js/add_category.js"></script>
+<script src="./js/delete_category.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="./js/update_category.js"></script>
+
