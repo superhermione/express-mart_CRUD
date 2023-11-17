@@ -1,4 +1,3 @@
-
 <script language="JavaScript">
 		function showform(dowhat) {
 			/*
@@ -72,66 +71,42 @@
         </div>
       </div>
     </section>
+
+
     <div id="browse">
     
-      <table id="category-table">
+      <table id="category-table" border="1">
           <thead>
               <tr>
-                  {{#each data.[0]}}
-                  <th>
-                      {{@key}}
-                  </th>
-                  {{/each}}
+                  <th><a href="#" onClick="newCategory({{this.categoryID}})">New</a></th>
+                  <th>Category ID</th>
+                  <th>Category Name</th>
                   <th></th>
               </tr>
           </thead>
           <tbody>
               {{#each data}}
               <tr data-value={{this.categoryID}}>
+                  <th><a href="#" onClick="updateCategory({{this.categoryID}})">Edit</a></th>
                   <td>{{this.categoryID}}</td>
                   <td>{{this.categoryName}}</td>
                   <td><button onclick="deleteCategory({{this.categoryID}})">Delete</button></td>
               </tr>
               {{/each}}
-          </tbody>
+          </tbody>    
       </table>
-      <table border="1" cellpadding="5">
-        <tr>
-          <th><a href="#" onClick="newCategory()">New</a></th>
-          <th></th>
-          <th>Category ID</th>
-          <th>Category Name</th>
-        </tr>
-        <tr>
-          <td><a href="#" onClick="updateCategory('this.categoryID')">Edit</a></td>
-          <td><a href="#" onclick="deleteCategory('this.categoryID')">Delete</a></td>
-          <td>1</td>
-          <td>Produce</td>
-        </tr>
-        <tr>
-          <td><a href="#" onClick="updateCategory('this.categoryID')">Edit</a></td>
-          <td><a href="#" onclick="deleteCategory('this.categoryID')">Delete</a></td>
-          <td>2</td>
-          <td>Dairy and Eggs</td>
-        </tr>
-        <tr>
-          <td><a href="#" onClick="updateCategory('this.categoryID')">Edit</a></td>
-          <td><a href="#" onclick="deleteCategory('this.categoryID')">Delete</a></td>
-          <td>3</td>
-          <td>Snacks</td>
-        </tr>
-      </table>
-      
       <p>&nbsp;</p>
       </div> <!-- browse -->
       <p><a href="#" onClick="showAll()">Display all forms</a> </p>
+      
       <div id="insert">
           <form action="/add-category"  method="POST" id="addCategory">
               <legend><strong>Add Category</strong></legend>
                 <fieldset class="fields">
-                  <label> Category Name </label> <input type="text" name="categoryName" id="categoryName">
+                  <label> Category Name </label> 
+                  <input type="text" name="categoryName" id="categoryName">
                 </fieldset>
-                <input class="btn btn-outline-secondary" type="submit" id="addCategory" value="Add Category">
+                <input class="btn btn-outline-secondary" type="submit" id="addCategory" value="Add Category" onClick="browseCategory()">
                 <input class="btn btn-outline-secondary" type="button" value="cancel" onClick="browseCategory()">
         </form> 
       </div><!-- insert -->
@@ -149,11 +124,12 @@
                     {{/each}}
                 </select>
                 <fieldset class="fields">
-                  <label> Category Name </label> <input type="text" name="categoryName" id="categoryName">
+                  <label> Category Name </label> <input type="text" name="inputCategoryNameUpdate" id="inputCategoryNameUpdate">
                 </fieldset>
             </fieldset>
-                <input class="btn btn-outline-secondary" type="submit" id="UpdateSaveCategory" value="Save Update Category">
+                <input class="btn btn-outline-secondary" type="submit" id="UpdateSaveCategory" value="Save Update Category" onClick="browseCategory()">
                 <input class="btn btn-outline-secondary" type="button" value="cancel" onClick="browseCategory()">
+                
         </form> 
       </div><!-- update -->
       <p>&nbsp;</p>

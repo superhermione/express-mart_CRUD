@@ -5,7 +5,7 @@
 */
 var express = require('express');   // We are using the express library for the web server
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
-PORT        = 3862;                 // Set a port number at the top so it's easy to change in the future
+PORT        = 3758;                 // Set a port number at the top so it's easy to change in the future
 
 // Database
 var db = require('./database/db-connector')
@@ -114,7 +114,7 @@ app.delete('/delete-category/', function(req,res,next){
               }
   })});
 
-app.put('/put-category', function(req,res,next){
+app.put('/put-category-ajax', function(req,res,next){
     let data = req.body;
 
     let categoryID = parseInt(data.categoryID);
